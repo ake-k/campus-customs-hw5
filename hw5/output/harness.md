@@ -143,6 +143,18 @@ The original database has none of these. The MCP server creates them inside `cam
 
 ---
 
+## Open tickets and how they link to other tables
+
+| Ticket | Type · requester | Links | What the links show |
+|---|---|---|---|
+| **101** | `customer_order` · Tauhid Zaman: 1 × CC-TEE-WHITE, size S | `sku`+`size` → `inventory`, `pricing`; `invoice_id` 501 → `invoices` → `vendors` (id 1) | 0 size-S tees on hand (short 1); $28 list / $8 cost. Invoice 501 is an open $840 bill to Bulldog Print Co (apparel reprint, 5 lead days), due 2026-08-28 and 3 days overdue, so the vendor won't reprint the tee until it's paid. |
+| **102** | `rent_notice` · Elm City Properties: "rent due in 2 days" | `lease_id` 1 → `leases`; cash → `cash_accounts` | Chapel Street shop, $2,400/month, due 2026-09-02 (2 days, not overdue). Paying it means a `payments` row, lower `cash_accounts`, and `leases.next_due` → 2026-10-02. |
+| **103** | `price_override` · Yale AI Club: 20 × CC-HOOD-NAVY, size M, bulk discount | `sku`+`size` → `inventory`, `pricing`; restock vendor via `vendors` / `invoices` | 8 on hand (short 12); $58 list / $22 cost ($36 margin per hoodie, so any discount must stay above $22). Restocking 12 costs $264, and the apparel vendor is blocked by invoice 501. |
+
+**Cash links all three.** Cash is $3,400. Rent ($2,400) plus invoice 501 ($840) leaves $160, which can't cover the $264 hoodie restock.
+
+---
+
 ## MCP tools that unlock the three tickets
 
 These were the first three tools. They read only the working copy, `data/campus_customs_new.db`, and use `desk.date_today` as "today". The full list of tools, including the ones added for the agent team, is under **All MCP tools** below.
