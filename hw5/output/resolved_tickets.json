@@ -1,0 +1,385 @@
+{
+  "shop_date": "2026-08-31",
+  "model": "gpt-6-luna",
+  "database": "data/campus_customs_new.db",
+  "cash": {
+    "account": "checking",
+    "starting_balance": 3400.0,
+    "total_paid": 3248.0,
+    "ending_balance": 152.0,
+    "ending_balance_matches_cash_accounts": true,
+    "payments": [
+      {
+        "id": 1,
+        "kind": "invoice",
+        "ref_id": 501,
+        "amount": 840.0,
+        "account": "checking",
+        "paid_at": "2026-08-31",
+        "approved_by": "Ake Kankirawatana"
+      },
+      {
+        "id": 2,
+        "kind": "rent",
+        "ref_id": 1,
+        "amount": 2400.0,
+        "account": "checking",
+        "paid_at": "2026-08-31",
+        "approved_by": "Ake Kankirawatana"
+      },
+      {
+        "id": 3,
+        "kind": "purchase_order",
+        "ref_id": 3,
+        "amount": 8.0,
+        "account": "checking",
+        "paid_at": "2026-08-31",
+        "approved_by": "Ake Kankirawatana"
+      }
+    ]
+  },
+  "tickets": [
+    {
+      "id": 101,
+      "type": "customer_order",
+      "requester": "Tauhid Zaman",
+      "subject": "Bulldog tee",
+      "final_status": "resolved",
+      "outcome": "Out-of-stock tee. The overdue $840 invoice was paid to unblock the vendor, then 1 tee was ordered for $8 (arrives 2026-09-05), and the customer has a draft with that date.",
+      "boss_final_note": "The size S tee was out of stock, so after invoice #501 was paid, the shop placed and paid PO request #3 for 1 CC-TEE-WHITE size S at $8; expected arrival is September 5, 2026. Customer Service saved updated draft #6 with the order status and expected arrival; checking is $152 and there are no unpaid payment requests. The restock is in transit, so no further action is pending for the shop.",
+      "cash_change": -848.0,
+      "agents": [
+        {
+          "agent": "boss",
+          "contribution": "Routed the ticket to Inventory first, then Accounting and Customer Service. Set awaiting_approval twice while payments were pending, then resolved the ticket once the tee was ordered and paid.",
+          "mcp_tools_used": {
+            "get_ticket": 3,
+            "get_cash_position": 3,
+            "list_open_tickets": 2,
+            "update_ticket": 3,
+            "list_approval_requests": 3,
+            "get_desk": 1
+          }
+        },
+        {
+          "agent": "inventory",
+          "contribution": "Confirmed 0 size-S tees on hand (short 1) and identified Bulldog Print Co (apparel reprint, 5 lead days) as the restock vendor, blocked by open invoice 501. After the invoice was paid, confirmed the vendor was unblocked and gave a 2026-09-05 arrival.",
+          "mcp_tools_used": {
+            "check_stock_and_margin": 3,
+            "list_vendors": 3,
+            "get_invoice_status": 3,
+            "get_ticket": 3,
+            "get_desk": 3
+          }
+        },
+        {
+          "agent": "accounting",
+          "contribution": "Filed request #1 to pay invoice 501 ($840). After that was paid, asked Inventory directly to confirm the shortfall, then filed request #3, a purchase order for 1 tee at $8. Never paid anything itself.",
+          "mcp_tools_used": {
+            "get_desk": 1,
+            "get_cash_position": 2,
+            "request_payment_approval": 2
+          }
+        },
+        {
+          "agent": "customer_service",
+          "contribution": "Saved three drafts to Tauhid Zaman (#1, #4, #6), ending with: tee ordered, expected 2026-09-05. Nothing was sent.",
+          "mcp_tools_used": {
+            "get_ticket": 3,
+            "check_stock_and_margin": 3,
+            "save_customer_draft": 3
+          }
+        }
+      ],
+      "human_approvals": [
+        {
+          "request_id": 1,
+          "kind": "invoice",
+          "payee": "Bulldog Print Co",
+          "amount": 840.0,
+          "prepared_by": "accounting",
+          "status": "paid",
+          "approved_by": "Ake Kankirawatana",
+          "decided_at": "2026-08-31",
+          "payment_id": 1,
+          "paid_from": "checking"
+        },
+        {
+          "request_id": 3,
+          "kind": "purchase_order",
+          "payee": "Bulldog Print Co",
+          "amount": 8.0,
+          "prepared_by": "accounting",
+          "status": "paid",
+          "approved_by": "Ake Kankirawatana",
+          "decided_at": "2026-08-31",
+          "payment_id": 3,
+          "paid_from": "checking",
+          "purchase_order": {
+            "sku": "CC-TEE-WHITE",
+            "size": "S",
+            "qty": 1,
+            "unit_cost": 8.0,
+            "expected_arrival": "2026-09-05"
+          }
+        }
+      ],
+      "customer_drafts": [
+        {
+          "id": 1,
+          "recipient": "Tauhid Zaman",
+          "subject": "Update on your Bulldog tee in size S",
+          "status": "draft"
+        },
+        {
+          "id": 4,
+          "recipient": "Tauhid Zaman",
+          "subject": "Updated update on your Classic Bulldog Tee in size S",
+          "status": "draft"
+        },
+        {
+          "id": 6,
+          "recipient": "Tauhid Zaman",
+          "subject": "Restock update: Classic Bulldog Tee in size S",
+          "status": "draft"
+        }
+      ],
+      "runs": [
+        {
+          "run_id": "94081539b894",
+          "trigger": "Started from the board",
+          "final_status": "awaiting_approval",
+          "delegations": [
+            "boss -> inventory",
+            "boss -> accounting",
+            "boss -> customer_service"
+          ],
+          "usage": {
+            "requests": 15,
+            "input_tokens": 43708,
+            "output_tokens": 2467,
+            "tool_calls": 18
+          }
+        },
+        {
+          "run_id": "eca52a616ec8",
+          "trigger": "A human (Ake Kankirawatana) approved payment request #1 ($840.00 to Bulldog Print Co). The dashboard paid it: payment #1, checking is now $2,560.00.",
+          "final_status": "awaiting_approval",
+          "delegations": [
+            "boss -> inventory",
+            "boss -> accounting",
+            "accounting -> inventory",
+            "boss -> customer_service"
+          ],
+          "usage": {
+            "requests": 17,
+            "input_tokens": 56394,
+            "output_tokens": 3249,
+            "tool_calls": 26
+          }
+        },
+        {
+          "run_id": "6412d0fe1487",
+          "trigger": "A human (Ake Kankirawatana) approved payment request #3 ($8.00 to Bulldog Print Co). The dashboard paid it: payment #3, checking is now $152.00.",
+          "final_status": "resolved",
+          "delegations": [
+            "boss -> customer_service"
+          ],
+          "usage": {
+            "requests": 8,
+            "input_tokens": 28360,
+            "output_tokens": 971,
+            "tool_calls": 8
+          }
+        }
+      ]
+    },
+    {
+      "id": 102,
+      "type": "rent_notice",
+      "requester": "Elm City Properties",
+      "subject": "Rent due",
+      "final_status": "resolved",
+      "outcome": "Rent of $2,400 paid to Elm City Properties before the 2026-09-02 due date. The lease's next due date is now 2026-10-02.",
+      "boss_final_note": "Confirmed payment request #2 for $2,400 to Elm City Properties is paid on 2026-08-31 (payment #2), ahead of the 2026-09-02 rent due date. Customer Service saved updated draft #5 confirming payment; the rent obligation is complete, and checking is now $160 with $8 committed to ticket #101's pending purchase order.",
+      "cash_change": -2400.0,
+      "agents": [
+        {
+          "agent": "boss",
+          "contribution": "Routed the ticket to Facilities first, then Accounting. Brought in Customer Service for a landlord acknowledgment. Confirmed the payment and resolved the ticket.",
+          "mcp_tools_used": {
+            "get_ticket": 3,
+            "get_cash_position": 3,
+            "list_open_tickets": 1,
+            "list_approval_requests": 2,
+            "update_ticket": 2
+          }
+        },
+        {
+          "agent": "facilities",
+          "contribution": "Checked the notice against lease 1: $2,400 to Elm City Properties, due 2026-09-02, not overdue, and cash covers it. Confirmed no rent request was already on the board.",
+          "mcp_tools_used": {
+            "get_ticket": 1,
+            "get_lease_and_cash": 1,
+            "list_approval_requests": 1
+          }
+        },
+        {
+          "agent": "accounting",
+          "contribution": "Filed request #2 for the $2,400 rent and flagged the competing $840 overdue invoice. Never paid anything itself.",
+          "mcp_tools_used": {
+            "get_desk": 1,
+            "get_cash_position": 1,
+            "request_payment_approval": 1
+          }
+        },
+        {
+          "agent": "customer_service",
+          "contribution": "Saved drafts #2 and #5 to Elm City Properties acknowledging the notice and confirming payment. Nothing was sent.",
+          "mcp_tools_used": {
+            "get_ticket": 2,
+            "save_customer_draft": 2
+          }
+        }
+      ],
+      "human_approvals": [
+        {
+          "request_id": 2,
+          "kind": "rent",
+          "payee": "Elm City Properties",
+          "amount": 2400.0,
+          "prepared_by": "accounting",
+          "status": "paid",
+          "approved_by": "Ake Kankirawatana",
+          "decided_at": "2026-08-31",
+          "payment_id": 2,
+          "paid_from": "checking"
+        }
+      ],
+      "customer_drafts": [
+        {
+          "id": 2,
+          "recipient": "Elm City Properties",
+          "subject": "Re: Rent due",
+          "status": "draft"
+        },
+        {
+          "id": 5,
+          "recipient": "Elm City Properties",
+          "subject": "Re: Rent due — payment confirmed",
+          "status": "draft"
+        }
+      ],
+      "runs": [
+        {
+          "run_id": "ee9cbb67bf10",
+          "trigger": "Started from the board",
+          "final_status": "resolved",
+          "delegations": [
+            "boss -> facilities",
+            "boss -> accounting",
+            "boss -> customer_service"
+          ],
+          "usage": {
+            "requests": 17,
+            "input_tokens": 47864,
+            "output_tokens": 1815,
+            "tool_calls": 18
+          }
+        },
+        {
+          "run_id": "1bd5654eeebd",
+          "trigger": "A human (Ake Kankirawatana) approved payment request #2 ($2,400.00 to Elm City Properties). The dashboard paid it: payment #2, checking is now $160.00.",
+          "final_status": "resolved",
+          "delegations": [
+            "boss -> customer_service"
+          ],
+          "usage": {
+            "requests": 7,
+            "input_tokens": 21133,
+            "output_tokens": 1123,
+            "tool_calls": 7
+          }
+        }
+      ]
+    },
+    {
+      "id": 103,
+      "type": "price_override",
+      "requester": "Yale AI Club",
+      "subject": "Bulk hoodie discount",
+      "final_status": "resolved",
+      "outcome": "Bulk discount: 10% off the 8 hoodies in stock ($417.60). The 12-unit restock ($264) was declined for lack of cash, so no money moved.",
+      "boss_final_note": "Approved a 10% bulk discount for the 8 size-M hoodies in stock: $52.20 each ($417.60 total), above the $22 unit cost. Declined to restock the 12-unit shortfall because the $264 purchase exceeds the $160 cash on hand and rent takes priority; no PO was filed. Customer Service saved draft #3 explaining that only 8 can be offered and that no restock is promised or ordered.",
+      "cash_change": 0.0,
+      "agents": [
+        {
+          "agent": "boss",
+          "contribution": "Sent Inventory and Accounting in the same step, then decided: 10% off the 8 in-stock hoodies ($52.20 each, $417.60 total) and no 12-unit restock, because $264 exceeds the $160 left. Resolved the ticket.",
+          "mcp_tools_used": {
+            "get_ticket": 1,
+            "update_ticket": 1
+          }
+        },
+        {
+          "agent": "inventory",
+          "contribution": "Found 8 of 20 size-M hoodies on hand (short 12) and identified Bulldog Print Co as the restock vendor, with a 5-day lead time.",
+          "mcp_tools_used": {
+            "get_ticket": 1,
+            "check_stock_and_margin": 1,
+            "list_vendors": 1
+          }
+        },
+        {
+          "agent": "accounting",
+          "contribution": "Priced discounts with quote_discount (cost floor $22/unit) and reported cash of $160, against $264 for a 12-unit restock. Filed no request.",
+          "mcp_tools_used": {
+            "get_desk": 1,
+            "get_cash_position": 1,
+            "get_ticket": 1,
+            "check_stock_and_margin": 1,
+            "quote_discount": 2,
+            "list_approval_requests": 1
+          }
+        },
+        {
+          "agent": "customer_service",
+          "contribution": "Saved draft #3 to Yale AI Club offering 8 hoodies at $52.20 each, with no restock promise. Nothing was sent.",
+          "mcp_tools_used": {
+            "get_ticket": 1,
+            "check_stock_and_margin": 1,
+            "quote_discount": 1,
+            "save_customer_draft": 1
+          }
+        }
+      ],
+      "human_approvals": [],
+      "customer_drafts": [
+        {
+          "id": 3,
+          "recipient": "Yale AI Club",
+          "subject": "Your bulk hoodie request",
+          "status": "draft"
+        }
+      ],
+      "runs": [
+        {
+          "run_id": "f5ff7f1afe29",
+          "trigger": "Started from the board",
+          "final_status": "resolved",
+          "delegations": [
+            "boss -> inventory",
+            "boss -> accounting",
+            "boss -> customer_service"
+          ],
+          "usage": {
+            "requests": 16,
+            "input_tokens": 44602,
+            "output_tokens": 2571,
+            "tool_calls": 19
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+# Publish only the hw5/ project. The virtual environment (.venv/) and anything
+# else in this folder stay on this machine.
+/*
+!/.gitignore
+!/README.md
+!/hw5/

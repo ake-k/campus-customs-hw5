@@ -1,0 +1,19 @@
+# Secrets
+.env
+.env.*
+!.env.example
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# Node / frontend build
+node_modules/
+frontend/dist/
+
+# Temp files
+*.tmp
+output/*.corrupt-*.json
+.DS_Store

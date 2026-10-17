@@ -1,0 +1,191 @@
+{
+  "server": "campus-customs",
+  "config": ".mcp.json",
+  "transport": "stdio",
+  "database": "data/campus_customs_new.db",
+  "tools_listed_by_server": [
+    "check_stock_and_margin",
+    "get_invoice_status",
+    "get_lease_and_cash"
+  ],
+  "run_at_utc": "2026-10-16T22:34:05+00:00",
+  "all_tools_passed": true,
+  "results": [
+    {
+      "ticket": 101,
+      "prompt": "Ticket 101 is a customer order for a Classic Bulldog Tee in size S, and it is linked to invoice 501. Is that invoice still open and overdue as of the shop's today, and is the vendor blocked from shipping a reprint?",
+      "tool": "get_invoice_status",
+      "arguments": {
+        "invoice_id": 501
+      },
+      "tool_output": {
+        "today": "2026-08-31",
+        "invoice_id": 501,
+        "description": "Rush reprint CC-TEE-WHITE S",
+        "amount": 840.0,
+        "due_date": "2026-08-28",
+        "status": "open",
+        "is_overdue": true,
+        "days_overdue": 3,
+        "vendor_id": 1,
+        "vendor_name": "Bulldog Print Co",
+        "vendor_specialty": "apparel reprint",
+        "vendor_lead_days": 5,
+        "vendor_blocked_from_shipping": true
+      },
+      "db_check": {
+        "today": {
+          "db": "2026-08-31",
+          "tool": "2026-08-31",
+          "match": true
+        },
+        "amount": {
+          "db": 840.0,
+          "tool": 840.0,
+          "match": true
+        },
+        "due_date": {
+          "db": "2026-08-28",
+          "tool": "2026-08-28",
+          "match": true
+        },
+        "status": {
+          "db": "open",
+          "tool": "open",
+          "match": true
+        },
+        "vendor_name": {
+          "db": "Bulldog Print Co",
+          "tool": "Bulldog Print Co",
+          "match": true
+        },
+        "vendor_lead_days": {
+          "db": 5,
+          "tool": 5,
+          "match": true
+        },
+        "days_overdue": {
+          "db": 3,
+          "tool": 3,
+          "match": true
+        }
+      },
+      "all_values_match_db": true
+    },
+    {
+      "ticket": 102,
+      "prompt": "Ticket 102 is a rent notice for lease 1. How much is the rent, when is it due relative to the shop's today, and does the checking account have enough cash to cover it?",
+      "tool": "get_lease_and_cash",
+      "arguments": {
+        "lease_id": 1
+      },
+      "tool_output": {
+        "today": "2026-08-31",
+        "lease_id": 1,
+        "space_name": "Chapel Street shop",
+        "landlord": "Elm City Properties",
+        "monthly_rent": 2400.0,
+        "next_due": "2026-09-02",
+        "days_until_due": 2,
+        "is_overdue": false,
+        "lease_notes": null,
+        "cash_accounts": [
+          {
+            "name": "checking",
+            "balance": 3400.0,
+            "date": "2026-08-31"
+          }
+        ],
+        "total_cash": 3400.0,
+        "cash_covers_rent": true,
+        "cash_after_rent": 1000.0
+      },
+      "db_check": {
+        "today": {
+          "db": "2026-08-31",
+          "tool": "2026-08-31",
+          "match": true
+        },
+        "monthly_rent": {
+          "db": 2400.0,
+          "tool": 2400.0,
+          "match": true
+        },
+        "next_due": {
+          "db": "2026-09-02",
+          "tool": "2026-09-02",
+          "match": true
+        },
+        "landlord": {
+          "db": "Elm City Properties",
+          "tool": "Elm City Properties",
+          "match": true
+        },
+        "total_cash": {
+          "db": 3400.0,
+          "tool": 3400.0,
+          "match": true
+        },
+        "days_until_due": {
+          "db": 2,
+          "tool": 2,
+          "match": true
+        }
+      },
+      "all_values_match_db": true
+    },
+    {
+      "ticket": 103,
+      "prompt": "Ticket 103: Yale AI Club wants 20 Basic Hoodies (CC-HOOD-NAVY) in size M at a bulk discount. How many are on hand, what is the shortfall, and what are the unit cost, list price, and margin so we know the floor for any discount?",
+      "tool": "check_stock_and_margin",
+      "arguments": {
+        "sku": "CC-HOOD-NAVY",
+        "size": "M",
+        "qty_needed": 20
+      },
+      "tool_output": {
+        "sku": "CC-HOOD-NAVY",
+        "name": "Basic Hoodie Big Yale",
+        "size": "M",
+        "location": "Aisle A",
+        "qty_on_hand": 8,
+        "qty_needed": 20,
+        "can_fill_from_stock": false,
+        "shortfall": 12,
+        "unit_cost": 22.0,
+        "list_price": 58.0,
+        "margin_per_unit_at_list": 36.0,
+        "margin_pct_at_list": 62.1,
+        "order_total_at_list": 1160.0
+      },
+      "db_check": {
+        "qty_on_hand": {
+          "db": 8,
+          "tool": 8,
+          "match": true
+        },
+        "unit_cost": {
+          "db": 22.0,
+          "tool": 22.0,
+          "match": true
+        },
+        "list_price": {
+          "db": 58.0,
+          "tool": 58.0,
+          "match": true
+        },
+        "shortfall": {
+          "db": 12,
+          "tool": 12,
+          "match": true
+        },
+        "margin_per_unit_at_list": {
+          "db": 36.0,
+          "tool": 36.0,
+          "match": true
+        }
+      },
+      "all_values_match_db": true
+    }
+  ]
+}
